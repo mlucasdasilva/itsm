@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  glpi:
+    image: diouxx/glpi
+    container_name: glpi
+    environment:
+      - TZ=America/Fortaleza
+    volumes:
+      - glpi:/var/www/html/glpi
+    ports:
+      - 8080:80
+    links:
+      - mysql  
+    restart: always
+    depends_on:
+      - mysql
+    networks:
+      - netglpi  
+
+
+  mysql:
+    image: mysql:5.7.23
+    container_name: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=glpidb
+      - MYSQL_USER=glpi
+      - MYSQL_PASSWORD=123456
+      - TZ=America/Fortaleza
+    ports:
+      - 3306:3306  
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - netglpi 
+
+networks:
+  netglpi:
+
+volumes:
+  glpi:
+  mysql:
