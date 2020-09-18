@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  itop:
+    image: vbkunin/itop:2.7.1-base
+    environment:
+      - TZ=America/Fortaleza
+    volumes:
+      - itop:/var/www/html/extensions
+    ports:
+      - 8080:80
+    links:
+      - mysql  
+    restart: always
+    depends_on:
+      - mysql
+
+
+  mysql:
+    image: mysql:5.7.23
+    container_name: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=itop
+      - MYSQL_USER=itop
+      - MYSQL_PASSWORD=123456
+      - TZ=America/Fortaleza
+    ports:
+      - 3306:3306  
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  itop:
+  mysql:
