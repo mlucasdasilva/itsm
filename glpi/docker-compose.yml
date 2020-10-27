@@ -4,6 +4,11 @@ services:
   glpi:
     image: diouxx/glpi
     container_name: glpi
+    # Tip: Default users accounts are :
+    # glpi/glpi for the administrator account
+    # tech/tech for the technician account
+    # normal/normal for the normal user
+    # post-only/postonly for the post-only user
     environment:
       - TZ=America/Fortaleza
     volumes:
